@@ -22,7 +22,7 @@ app.use('/api/auth', authRoute);
 async function start() {
   try {
     await mongoose.connect(
-      `mongodb://localhost:27017/?authSource=${DB_NAME}`
+      `mongodb://localhost:27017/${DB_NAME}`
     )
 
     app.listen(PORT, () => {
