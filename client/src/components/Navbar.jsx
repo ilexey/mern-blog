@@ -1,12 +1,22 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+import { checkIsAuth, logout } from '../redux/features/auth/authSlice';
+import { toast } from 'react-toastify';
 
 function Navbar() {
-  const isAuth = false;
+  const isAuth = useSelector(checkIsAuth);
+  const dispatch = useDispatch();
 
   const activeStyles = {
     color: "white"
-  }
+  };
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    window.localStorage.removeItem("token");
+    toast("Вы вышли из системы");
+  };
 
   return (
     <div className="flex py-4 justify-between items-center">
@@ -49,7 +59,9 @@ function Navbar() {
       <div className="flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm px-4 py-2">
         {
           isAuth
-            ? <button>
+            ? <button
+              onClick={logoutHandler}
+            >
               Выйти
             </button>
             : <Link to="/login">Войти</Link>
